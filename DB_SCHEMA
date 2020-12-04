@@ -1,0 +1,62 @@
+
+CREATE TABLE tb_user
+(
+id INT NOT NULL AUTO_INCREMENT,
+dt_reg TIMESTAMP NOT NULL,
+name VARCHAR(50) NOT NULL,
+phone VARCHAR(12),
+email VARCHAR(20),
+passwd VARCHAR(18),
+picture VARCHAR(50),
+PRIMARY KEY(id)
+);
+
+CREATE TABLE tb_route
+(
+id INT NOT NULL AUTO_INCREMENT,
+dt_reg TIMESTAMP NOT NULL,
+name VARCHAR(25) NOT NULL,
+description VARCHAR(150) NOT NULL,
+routemap VARCHAR(100) NOT NULL,
+distance DOUBLE,
+stars INT,
+user_id INT,
+PRIMARY KEY(id),
+FOREIGN KEY (user_id) REFERENCES tb_user(id)
+);
+
+CREATE TABLE tb_schedule
+(
+id INT NOT NULL AUTO_INCREMENT,
+dt_reg TIMESTAMP NOT NULL,
+dt_schedule TIMESTAMP NOT NULL,
+PRIMARY KEY(id)
+);
+
+CREATE TABLE tb_tag
+(
+id INT NOT NULL AUTO_INCREMENT,
+dt_reg TIMESTAMP NOT NULL,
+name VARCHAR(10),
+PRIMARY KEY(id)
+);
+
+CREATE TABLE tb_schedulerouteuser
+(
+user_id INT,
+route_id INT,
+schedule_id INT,
+PRIMARY KEY (user_id,route_id,schedule_id),
+FOREIGN KEY(user_id) REFERENCES tb_user(id),
+FOREIGN KEY(route_id) REFERENCES tb_route(id),
+FOREIGN KEY(schedule_id) REFERENCES tb_schedule(id) 
+);
+
+CREATE TABLE tb_routetag
+(
+route_id INT,
+tag_id INT,
+PRIMARY KEY (route_id,tag_id),
+FOREIGN KEY(route_id) REFERENCES tb_route(id),
+FOREIGN KEY(tag_id) REFERENCES tb_tag(id),
+);
